@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#070711">
+<title>PRUEBA GAY™ v7.0 — NEON ULTRA</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:#070711;
+  color:#fff;
+  font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+  position:relative;
+}
+
+/* ===== FONDO ULTRA ===== */
+
+.bg{
+  position:fixed;
+  inset:-40%;
+  z-index:0;
+  background:
+    radial-gradient(circle at 15% 20%,rgba(255,0,150,.24),transparent 23%),
+    radial-gradient(circle at 85% 25%,rgba(0,220,255,.20),transparent 25%),
+    radial-gradient(circle at 50% 85%,rgba(130,40,255,.24),transparent 28%);
+  filter:blur(45px);
+  animation:bgMove 10s ease-in-out infinite alternate;
+}
+
+@keyframes bgMove{
+  0%{transform:scale(1) rotate(0)}
+  50%{transform:scale(1.13) rotate(3deg)}
+  100%{transform:scale(1.06) rotate(-3deg)}
+}
+
+.orb{
+  position:fixed;
+  width:170px;
+  height:170px;
+  border-radius:50%;
+  filter:blur(60px);
+  opacity:.28;
+  pointer-events:none;
+  z-index:1;
+}
+
+.orb.a{
+  background:#ff008c;
+  top:-60px;
+  left:-50px;
+  animation:orbA 7s infinite alternate ease-in-out;
+}
+
+.orb.b{
+  background:#00d9ff;
+  right:-60px;
+  top:35%;
+  animation:orbB 8s infinite alternate ease-in-out;
+}
+
+.orb.c{
+  background:#852cff;
+  bottom:-80px;
+  left:35%;
+  animation:orbC 9s infinite alternate ease-in-out;
+}
+
+@keyframes orbA{
+  to{transform:translate(120px,100px)}
+}
+
+@keyframes orbB{
+  to{transform:translate(-120px,-40px)}
+}
+
+@keyframes orbC{
+  to{transform:translate(80px,-90px)}
+}
+
+/* ===== PARTÍCULAS ===== */
+
+#particles{
+  position:fixed;
+  inset:0;
+  z-index:2;
+  pointer-events:none;
+}
+
+.particle{
+  position:absolute;
+  width:3px;
+  height:3px;
+  border-radius:50%;
+  background:#fff;
+  box-shadow:0 0 8px #fff,0 0 15px #ff00b7;
+  animation:float 5s linear infinite;
+}
+
+@keyframes float{
+  0%{
+    opacity:0;
+    transform:translateY(30px) scale(.5);
+  }
+  20%{opacity:1}
+  80%{opacity:.8}
+  100%{
+    opacity:0;
+    transform:translateY(-190px) scale(1.5);
+  }
+}
+
+/* ===== PANTALLAS ===== */
+
+.screen{
+  position:fixed;
+  inset:0;
+  z-index:10;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.screen.active{
+  display:flex;
+}
+
+.fadeIn{
+  animation:fadeIn .55s ease;
+}
+
+@keyframes fadeIn{
+  from{
+    opacity:0;
+    transform:translateY(20px) scale(.97);
+  }
+  to{
+    opacity:1;
+    transform:none;
+  }
+}
+
+/* ===== BOOT ===== */
+
+#boot{
+  flex-direction:column;
+  text-align:center;
+}
+
+.bootLogo{
+  font-size:82px;
+  animation:logoIn 1.2s cubic-bezier(.16,1,.3,1);
+  filter:drop-shadow(0 0 22px rgba(255,0,180,.8));
+}
+
+@keyframes logoIn{
+  0%{
+    opacity:0;
+    transform:scale(.15) rotate(-20deg);
+    filter:blur(20px);
+  }
+  70%{
+    transform:scale(1.15) rotate(5deg);
+  }
+  100%{
+    opacity:1;
+    transform:scale(1) rotate(0);
+    filter:blur(0) drop-shadow(0 0 22px rgba(255,0,180,.8));
+  }
+}
+
+.bootTitle{
+  margin-top:20px;
+  font-size:25px;
+  font-weight:900;
+  letter-spacing:5px;
+}
+
+.gradientText{
+  background:linear-gradient(
+    90deg,
+    #ff008c,
+    #ffcf00,
+    #00ff88,
+    #00d9ff,
+    #9b35ff,
+    #ff008c
+  );
+  background-size:300%;
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  animation:rainbow 3s linear infinite;
+}
+
+@keyframes rainbow{
+  from{background-position:0}
+  to{background-position:300%}
+}
+
+.bootSub{
+  margin-top:9px;
+  color:#777;
+  font-size:11px;
+  letter-spacing:3px;
+}
+
+.bootBar{
+  width:245px;
+  height:5px;
+  margin-top:32px;
+  background:#ffffff12;
+  border-radius:20px;
+  overflow:hidden;
+}
+
+.bootFill{
+  width:0;
+  height:100%;
+  background:linear-gradient(90deg,#ff008c,#8c4dff,#00d9ff);
+  box-shadow:0 0 15px #ff00aa;
+  animation:load 2.7s ease forwards;
+}
+
+@keyframes load{
+  to{width:100%}
+}
+
+.bootStatus{
+  margin-top:15px;
+  color:#666;
+  font-size:10px;
+  letter-spacing:2px;
+}
+
+/* ===== HOME ===== */
+
+.homeCard,
+.panel{
+  width:min(440px,100%);
+  padding:30px 24px;
+  border-radius:30px;
+  background:rgba(7,7,24,.78);
+  border:1px solid rgba(255,255,255,.13);
+  backdrop-filter:blur(20px);
+  box-shadow:
+    0 0 30px rgba(255,0,180,.18),
+    0 0 70px rgba(0,220,255,.08),
+    inset 0 0 30px rgba(255,255,255,.025);
+}
+
+.homeCard{
+  text-align:center;
+  animation:cardIn .7s cubic-bezier(.16,1,.3,1);
+}
+
+@keyframes cardIn{
+  from{
+    opacity:0;
+    transform:translateY(40px) scale(.9);
+    filter:blur(8px);
+  }
+  to{
+    opacity:1;
+    transform:none;
+    filter:blur(0);
+  }
+}
+
+.logo{
+  font-size:43px;
+  font-weight:950;
+  letter-spacing:2px;
+}
+
+.version{
+  margin-top:7px;
+  color:#777;
+  font-size:10px;
+  letter-spacing:3px;
+}
+
+.homeDescription{
+  margin-top:25px;
+  color:#bdbdc8;
+  font-size:14px;
+  line-height:1.6;
+}
+
+.note{
+  margin-top:15px;
+  padding:10px;
+  border-radius:12px;
+  background:rgba(255,255,255,.035);
+  color:#777;
+  font-size:10px;
+  line-height:1.5;
+}
+
+.mainButton,
+.answer,
+.secondaryButton{
+  border:0;
+  color:#fff;
+  cursor:pointer;
+}
+
+.mainButton{
+  width:100%;
+  margin-top:25px;
+  padding:17px;
+  border-radius:17px;
+  font-size:15px;
+  font-weight:900;
+  letter-spacing:1px;
+  background:linear-gradient(90deg,#ff008c,#823cff,#00d9ff);
+  background-size:200%;
+  box-shadow:0 0 25px rgba(255,0,180,.35);
+  animation:rainbow 4s linear infinite,pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes pulse{
+  50%{transform:scale(1.025)}
+}
+
+.mainButton:active,
+.answer:active,
+.secondaryButton:active{
+  transform:scale(.96);
+}
+
+.brand{
+  margin-top:22px;
+  color:#555;
+  font-size:9px;
+  letter-spacing:3px;
+}
+
+/* ===== GÉNERO ===== */
+
+.panel{
+  text-align:center;
+  animation:cardIn .6s ease;
+}
+
+.panelTitle{
+  font-size:25px;
+  font-weight:900;
+}
+
+.panelSub{
+  color:#999;
+  margin-top:9px;
+  font-size:13px;
+}
+
+.genderButton{
+  width:100%;
+  margin-top:12px;
+  padding:16px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.12);
+  color:white;
+  background:linear-gradient(
+    90deg,
+    rgba(255,0,180,.18),
+    rgba(0,210,255,.15)
+  );
+  font-size:15px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.genderButton:active{
+  transform:scale(.97);
+}
+
+/* ===== QUIZ ===== */
+
+.quiz{
+  width:min(460px,100%);
+  animation:fadeIn .5s ease;
+}
+
+.quizHeader{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:12px;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:1px;
+}
+
+.online{
+  color:#00eaff;
+  text-shadow:0 0 10px #00eaff;
+}
+
+.progress{
+  height:7px;
+  border-radius:20px;
+  background:#ffffff12;
+  overflow:hidden;
+  margin-bottom:20px;
+}
+
+.progressFill{
+  width:0;
+  height:100%;
+  border-radius:20px;
+  background:linear-gradient(90deg,#ff008c,#873cff,#00eaff);
+  box-shadow:0 0 15px #ff00aa;
+  transition:width .4s ease;
+}
+
+.questionCard{
+  padding:27px 19px;
+  border-radius:26px;
+  background:rgba(7,7,24,.82);
+  border:1px solid rgba(255,255,255,.13);
+  box-shadow:0 0 30px rgba(255,0,180,.15);
+  backdrop-filter:blur(18px);
+}
+
+.question{
+  text-align:center;
+  font-size:20px;
+  line-height:1.4;
+  margin-bottom:22px;
+}
+
+.answers{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.answer{
+  padding:15px;
+  border-radius:15px;
+  border:1px solid rgba(255,255,255,.12);
+  background:linear-gradient(
+    90deg,
+    rgba(255,0,180,.10),
+    rgba(0,220,255,.08)
+  );
+  text-align:left;
+  font-size:14px;
+  font-weight:700;
+  animation:answerIn .35s backwards;
+}
+
+.answer:nth-child(2){animation-delay:.05s}
+.answer:nth-child(3){animation-delay:.10s}
+.answer:nth-child(4){animation-delay:.15s}
+
+.answer.selected{
+  background:linear-gradient(
+    90deg,
+    rgba(255,0,180,.55),
+    rgba(0,220,255,.45)
+  );
+  box-shadow:0 0 25px rgba(255,0,200,.4);
+}
+
+.answer:disabled{
+  opacity:.75;
+}
+
+@keyframes answerIn{
+  from{
+    opacity:0;
+    transform:translateY(10px);
+  }
+  to{
+    opacity:1;
+    transform:none;
+  }
+}
+
+/* ===== ANALIZANDO ===== */
+
+.loading{
+  text-align:center;
+}
+
+.spinner{
+  width:72px;
+  height:72px;
+  margin:auto;
+  border-radius:50%;
+  border:4px solid #ffffff12;
+  border-top-color:#ff008c;
+  border-right-color:#823cff;
+  border-bottom-color:#00eaff;
+  animation:spin .9s linear infinite;
+  box-shadow:0 0 30px rgba(255,0,180,.3);
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+
+.loading h2{
+  margin-top:25px;
+  font-size:23px;
+  letter-spacing:3px;
+}
+
+.loading p{
+  margin-top:10px;
+  color:#888;
+  font-size:12px;
+}
+
+/* ===== RESULTADO ===== */
+
+.result{
+  text-align:center;
+  width:min(450px,100%);
+  padding:30px 22px;
+  border-radius:30px;
+  background:rgba(7,7,24,.86);
+  border:1px solid rgba(255,255,255,.14);
+  box-shadow:
+    0 0 35px rgba(255,0,180,.22),
+    0 0 70px rgba(0,220,255,.10);
+  animation:resultIn .8s ease;
+}
+
+@keyframes resultIn{
+  from{
+    opacity:0;
+    transform:translateY(35px) scale(.88);
+  }
+  to{
+    opacity:1;
+    transform:none;
+  }
+}
+
+.resultIcon{
+  font-size:60px;
+  animation:iconPop .8s ease;
+}
+
+@keyframes iconPop{
+  0%{
+    transform:scale(.2) rotate(-20deg);
+    opacity:0;
+  }
+  70%{transform:scale(1.15) rotate(7deg)}
+  100%{transform:scale(1)}
+}
+
+.resultTitle{
+  margin-top:10px;
+  font-size:23px;
+  font-weight:900;
+}
+
+.resultText{
+  margin-top:12px;
+  color:#aaa;
+  font-size:13px;
+  line-height:1.5;
+}
+
+.score{
+  margin:16px 0;
+  font-size:58px;
+  font-weight:950;
+  text-shadow:0 0 18px #ff00aa,0 0 30px #00eaff;
+}
+
+.resultBar{
+  height:10px;
+  background:#ffffff12;
+  border-radius:20px;
+  overflow:hidden;
+}
+
+.resultFill{
+  width:0;
+  height:100%;
+  border-radius:20px;
+  background:linear-gradient(90deg,#ff008c,#813cff,#00eaff);
+  box-shadow:0 0 15px #ff00aa;
+  transition:width 1.3s ease;
+}
+
+.resultButtons{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin-top:22px;
+}
+
+.secondaryButton{
+  width:100%;
+  padding:15px;
+  border-radius:15px;
+  background:linear-gradient(
+    90deg,
+    rgba(255,0,180,.20),
+    rgba(0,220,255,.16)
+  );
+  border:1px solid rgba(255,255,255,.12);
+  font-weight:800;
+}
+
+.share{
+  background:linear-gradient(90deg,#ff008c,#813cff,#00d9ff);
+}
+
+/* ===== FOOTER RESULTADO ===== */
+
+.resultBrand{
+  margin-top:17px;
+  color:#555;
+  font-size:9px;
+  letter-spacing:2px;
+}
+
+/* ===== MOBILE ===== */
+
+@media(max-height:650px){
+  .homeCard,.panel,.result{
+    padding:22px 18px;
+  }
+
+  .logo{
+    font-size:34px;
+  }
+
+  .homeDescription{
+    margin-top:15px;
+  }
+
+  .questionCard{
+    padding:20px 15px;
+  }
+
+  .question{
+    font-size:18px;
+    margin-bottom:15px;
+  }
+
+  .answer{
+    padding:12px;
+  }
+
+  .resultIcon{
+    font-size:48px;
+  }
+
+  .score{
+    font-size:48px;
+    margin:10px 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg"></div>
+<div class="orb a"></div>
+<div class="orb b"></div>
+<div class="orb c"></div>
+<div id="particles"></div>
+
+<!-- BOOT -->
+<section id="boot" class="screen active">
+  <div class="bootLogo">🌈</div>
+
+  <div class="bootTitle gradientText">
+    PRUEBA GAY™
+  </div>
+
+  <div class="bootSub">
+    NEON ULTRA · v7.0
+  </div>
+
+  <div class="bootBar">
+    <div class="bootFill"></div>
+  </div>
+
+  <div class="bootStatus">
+    INICIANDO LHEG-STUDIO
+  </div>
+</section>
+
+<!-- HOME -->
+<section id="home" class="screen">
+  <div class="homeCard">
+
+    <div class="logo gradientText">
+      PRUEBA GAY™
+    </div>
+
+    <div class="version">
+      NEON ULTRA · v7.0
+    </div>
+
+    <div class="homeDescription">
+      Un test interactivo de entretenimiento
+      basado en tus respuestas.
+    </div>
+
+
+    <button class="mainButton" onclick="goGender()">
+      ✨ COMENZAR
+    </button>
+
+    <div class="brand">
+      LHEG-STUDIO
+    </div>
+
+  </div>
+</section>
+
+<!-- GENDER -->
+<section id="gender" class="screen">
+  <div class="panel">
+
+    <div class="panelTitle gradientText">
+      SELECCIONA UNA OPCIÓN
+    </div>
+
+    <div class="panelSub">
+      Esto determina qué conjunto de preguntas aparecerá.
+    </div>
+
+    <button class="genderButton" onclick="startQuiz('hombre')">
+      👤 HOMBRE
+    </button>
+
+    <button class="genderButton" onclick="startQuiz('mujer')">
+      👤 MUJER
+    </button>
+
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section id="quizScreen" class="screen">
+
+  <div class="quiz">
+
+    <div class="quizHeader">
+      <span id="counter">PREGUNTA 1 / 20</span>
+      <span class="online">● ONLINE</span>
+    </div>
+
+    <div class="progress">
+      <div id="progressFill" class="progressFill"></div>
+    </div>
+
+    <div class="questionCard">
+
+      <div id="question" class="question"></div>
+
+      <div id="answers" class="answers"></div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- LOADING -->
+<section id="loadingScreen" class="screen">
+
+  <div class="loading">
+
+    <div class="spinner"></div>
+
+    <h2 class="gradientText">
+      ANALIZANDO
+    </h2>
+
+    <p id="loadingText">
+      Procesando respuestas...
+    </p>
+
+  </div>
+</section>
+
+<!-- RESULT -->
+<section id="resultScreen" class="screen">
+
+  <div class="result">
+
+    <div id="resultIcon" class="resultIcon">
+      🌈
+    </div>
+
+    <div id="resultTitle" class="resultTitle gradientText">
+      RESULTADO
+    </div>
+
+    <div id="resultText" class="resultText"></div>
+
+    <div id="score" class="score">
+      0%
+    </div>
+
+    <div class="resultBar">
+      <div id="resultFill" class="resultFill"></div>
+    </div>
+
+    <div class="resultButtons">
+
+      <button class="secondaryButton share" onclick="shareResult()">
+        📤 COMPARTIR RESULTADO
+      </button>
+
+      <button class="secondaryButton" onclick="restart()">
+        ↻ REPETIR TEST
+      </button>
+
+    </div>
+
+    <div class="resultBrand">
+      PRUEBA GAY™ · LHEG-STUDIO
+    </div>
+
+  </div>
+</section>
+
+<script>
+/* ================================
+   DATOS
+================================ */
+
+const questions = {
+
+  hombre:[
+    ["Cuando ves a un chico que te parece atractivo, ¿qué piensas?",
+     ["No pienso nada especial","Me llama un poco la atención","Me interesa bastante","Me parece muy atractivo"]],
+
+    ["¿Te imaginas teniendo una cita con un chico?",
+     ["Nunca","Tal vez alguna vez","Sí, podría ser","Sí, me gustaría"]],
+
+    ["¿Alguna vez te has sentido atraído por un chico?",
+     ["No","Muy pocas veces","Varias veces","Sí, muchas veces"]],
+
+    ["¿Qué sientes cuando un chico que te gusta te presta atención?",
+     ["Nada especial","Me pongo un poco nervioso","Me emociona","Me encanta"]],
+
+    ["¿Te gustaría conocer mejor a un chico que te parece interesante?",
+     ["No especialmente","Quizás","Sí","Definitivamente"]],
+
+    ["¿Te imaginas teniendo una relación romántica con un chico?",
+     ["No","Rara vez","A veces","Sí"]],
+
+    ["Cuando tus amigos hablan de chicos atractivos, ¿te identificas con ellos?",
+     ["Nunca","A veces","Bastante","Mucho"]],
+
+    ["¿Algún chico te ha puesto nervioso de una forma especial?",
+     ["No","Alguna vez","Varias veces","Sí, muchas veces"]],
+
+    ["Si un chico que te gusta te invita a salir, ¿qué harías?",
+     ["Probablemente diría que no","Lo pensaría","Probablemente aceptaría","Aceptaría inmediatamente"]],
+
+    ["¿Te gusta recibir cumplidos de chicos?",
+     ["No me importa","Un poco","Sí","Me encanta"]],
+
+    ["¿Te has imaginado alguna vez enamorándote de un chico?",
+     ["Nunca","Alguna vez","Varias veces","Sí, muchas veces"]],
+
+    ["¿Qué tan importante es para ti la personalidad de un chico que te gusta?",
+     ["No me interesa","Un poco","Bastante","Muchísimo"]],
+
+    ["¿Te gustaría pasar más tiempo con un chico que te atrae?",
+     ["No","Quizás","Sí","Definitivamente"]],
+
+    ["¿Te has puesto nervioso al hablar con un chico que te gusta?",
+     ["Nunca","Alguna vez","Bastantes veces","Muchas veces"]],
+
+    ["¿Te parecen atractivos algunos chicos de tu edad?",
+     ["No","Muy pocos","Algunos","Sí, bastantes"]],
+
+    ["Si pudieras elegir una cita, ¿qué opción te llamaría más la atención?",
+     ["Una cita con una chica","No estoy seguro","Una cita con un chico","Definitivamente con un chico"]],
+
+    ["¿Te emociona la idea de que un chico pueda sentir algo por ti?",
+     ["No","Un poco","Sí","Muchísimo"]],
+
+    ["¿Has tenido algún crush en un chico?",
+     ["Nunca","Creo que alguna vez","Sí","Sí, varias veces"]],
+
+    ["¿Te gustaría que un chico te considerara especial?",
+     ["No","Tal vez","Sí","Muchísimo"]],
+
+    ["En general, ¿qué tan atraído te sientes por los chicos?",
+     ["Nada","Poco","Bastante","Mucho"]]
+  ],
+
+  mujer:[
+    ["Cuando ves a una chica que te parece atractiva, ¿qué piensas?",
+     ["No pienso nada especial","Me llama un poco la atención","Me interesa bastante","Me parece muy atractiva"]],
+
+    ["¿Te imaginas teniendo una cita con una chica?",
+     ["Nunca","Tal vez alguna vez","Sí, podría ser","Sí, me gustaría"]],
+
+    ["¿Alguna vez te has sentido atraído por una chica?",
+     ["No","Muy pocas veces","Varias veces","Sí, muchas veces"]],
+
+    ["¿Qué sientes cuando una chica que te gusta te presta atención?",
+     ["Nada especial","Me pongo un poco nervioso","Me emociona","Me encanta"]],
+
+    ["¿Te gustaría conocer mejor a una chica que te parece interesante?",
+     ["No especialmente","Quizás","Sí","Definitivamente"]],
+
+    ["¿Te imaginas teniendo una relación romántica con una chica?",
+     ["No","Rara vez","A veces","Sí"]],
+
+    ["Cuando tus amigos hablan de chicas atractivas, ¿te identificas con ellos?",
+     ["Nunca","A veces","Bastante","Mucho"]],
+
+    ["¿Alguna chica te ha puesto nervioso de una forma especial?",
+     ["No","Alguna vez","Varias veces","Sí, muchas veces"]],
+
+    ["Si una chica que te gusta te invita a salir, ¿qué harías?",
+     ["Probablemente diría que no","Lo pensaría","Probablemente aceptaría","Aceptaría inmediatamente"]],
+
+    ["¿Te gusta recibir cumplidos de chicas?",
+     ["No me importa","Un poco","Sí","Me encanta"]],
+
+    ["¿Te has imaginado alguna vez enamorándote de una chica?",
+     ["Nunca","Alguna vez","Varias veces","Sí, muchas veces"]],
+
+    ["¿Qué tan importante es para ti la personalidad de una chica que te gusta?",
+     ["No me interesa","Un poco","Bastante","Muchísimo"]],
+
+    ["¿Te gustaría pasar más tiempo con una chica que te atrae?",
+     ["No","Quizás","Sí","Definitivamente"]],
+
+    ["¿Te has puesto nervioso al hablar con una chica que te gusta?",
+     ["Nunca","Alguna vez","Bastantes veces","Muchas veces"]],
+
+    ["¿Te parecen atractivas algunas chicas de tu edad?",
+     ["No","Muy pocas","Algunas","Sí, bastantes"]],
+
+    ["Si pudieras elegir una cita, ¿qué opción te llamaría más la atención?",
+     ["Una cita con un chico","No estoy seguro","Una cita con una chica","Definitivamente con una chica"]],
+
+    ["¿Te emociona la idea de que una chica pueda sentir algo por ti?",
+     ["No","Un poco","Sí","Muchísimo"]],
+
+    ["¿Has tenido algún crush en una chica?",
+     ["Nunca","Creo que alguna vez","Sí","Sí, varias veces"]],
+
+    ["¿Te gustaría que una chica te considerara especial?",
+     ["No","Tal vez","Sí","Muchísimo"]],
+
+    ["En general, ¿qué tan atraído te sientes por las chicas?",
+     ["Nada","Poco","Bastante","Mucho"]]
+  ]
+};
+
+let selectedQuestions=[];
+let current=0;
+let total=0;
+let selectedGender="";
+
+/* ================================
+   NAVEGACIÓN
+================================ */
+
+function show(id){
+
+  document.querySelectorAll(".screen").forEach(screen=>{
+    screen.classList.remove("active");
+  });
+
+  const element=document.getElementById(id);
+
+  element.classList.add("active");
+  element.classList.remove("fadeIn");
+
+  void element.offsetWidth;
+
+  element.classList.add("fadeIn");
+}
+
+function goGender(){
+  show("gender");
+}
+
+/* ================================
+   TEST
+================================ */
+
+function startQuiz(gender){
+
+  selectedGender=gender;
+  selectedQuestions=questions[gender];
+
+  current=0;
+  total=0;
+
+  show("quizScreen");
+  renderQuestion();
+}
+
+function renderQuestion(){
+
+  const item=selectedQuestions[current];
+
+  document.getElementById("counter").textContent=
+    `PREGUNTA ${current+1} / ${selectedQuestions.length}`;
+
+  document.getElementById("progressFill").style.width=
+    `${(current/selectedQuestions.length)*100}%`;
+
+  document.getElementById("question").textContent=item[0];
+
+  const container=document.getElementById("answers");
+
+  container.innerHTML="";
+
+  item[1].forEach((answer,index)=>{
+
+    const button=document.createElement("button");
+
+    button.className="answer";
+    button.textContent=answer;
+
+    button.onclick=()=>{
+      chooseAnswer(index,button);
+    };
+
+    container.appendChild(button);
+  });
+}
+
+function chooseAnswer(index,button){
+
+  document.querySelectorAll(".answer").forEach(btn=>{
+    btn.disabled=true;
+  });
+
+  button.classList.add("selected");
+
+  total+=index;
+
+  setTimeout(()=>{
+
+    current++;
+
+    if(current<selectedQuestions.length){
+      renderQuestion();
+    }else{
+      finish();
+    }
+
+  },400);
+}
+
+/* ================================
+   FINALIZAR
+================================ */
+
+function finish(){
+
+  document.getElementById("progressFill").style.width="100%";
+
+  show("loadingScreen");
+
+  const messages=[
+    "Procesando respuestas...",
+    "Revisando respuestas...",
+    "Calculando puntuación...",
+    "Preparando resultado..."
+  ];
+
+  let i=0;
+
+  const text=document.getElementById("loadingText");
+
+  text.textContent=messages[0];
+
+  const interval=setInterval(()=>{
+
+    i++;
+
+    if(i<messages.length){
+      text.textContent=messages[i];
+    }
+
+  },550);
+
+  setTimeout(()=>{
+
+    clearInterval(interval);
+    showResult();
+
+  },2700);
+}
+
+/* ================================
+   RESULTADO
+================================ */
+
+function showResult(){
+
+  const max=selectedQuestions.length*3;
+
+  const percent=Math.round((total/max)*100);
+
+  let data;
+
+  if(percent<=20){
+
+    data={
+      icon:"🤖",
+      title:"SEÑALES MUY BAJAS",
+      text:"Tus respuestas generaron una puntuación baja en este juego."
+    };
+
+  }else if(percent<=40){
+
+    data={
+      icon:"😎",
+      title:"SEÑALES BAJAS",
+      text:"Tus respuestas generaron algunas señales, pero el resultado es solo recreativo."
+    };
+
+  }else if(percent<=60){
+
+    data={
+      icon:"👀",
+      title:"SISTEMA INDECISO",
+      text:"Tus respuestas estuvieron bastante mezcladas."
+    };
+
+  }else if(percent<=80){
+
+    data={
+      icon:"🌈",
+      title:"SEÑALES ALTAS",
+      text:"Tus respuestas generaron una puntuación alta en este juego."
+    };
+
+  }else if(percent<=95){
+
+    data={
+      icon:"👑",
+      title:"SEÑALES MUY ALTAS",
+      text:"Tus respuestas generaron una puntuación muy alta en este juego."
+    };
+
+  }else{
+
+    data={
+      icon:"🌈",
+      title:"PRUEBA GAY OVERLOAD",
+      text:"El sistema recibió una cantidad extremadamente alta de señales."
+    };
+  }
+
+  document.getElementById("resultIcon").textContent=data.icon;
+  document.getElementById("resultTitle").textContent=data.title;
+  document.getElementById("resultText").textContent=data.text;
+
+  document.getElementById("score").textContent="0%";
+  document.getElementById("resultFill").style.width="0%";
+
+  show("resultScreen");
+
+  setTimeout(()=>{
+
+    document.getElementById("resultFill").style.width=
+      percent+"%";
+
+    animateScore(percent);
+
+  },200);
+
+}
+
+/* ================================
+   ANIMACIÓN SCORE
+================================ */
+
+function animateScore(target){
+
+  const element=document.getElementById("score");
+
+  const start=performance.now();
+  const duration=1200;
+
+  function frame(now){
+
+    const progress=Math.min(
+      (now-start)/duration,
+      1
+    );
+
+    const eased=1-Math.pow(1-progress,3);
+
+    element.textContent=
+      Math.round(target*eased)+"%";
+
+    if(progress<1){
+      requestAnimationFrame(frame);
+    }
+  }
+
+  requestAnimationFrame(frame);
+}
+
+/* ================================
+   COMPARTIR
+================================ */
+
+async function shareResult(){
+
+  const title=document.getElementById("resultTitle").textContent;
+  const score=document.getElementById("score").textContent;
+
+  const text=
+`🌈 PRUEBA GAY™ v7.0
+NEON ULTRA
+
+${title}
+Puntuación: ${score}
+
+Juego creado por LHEG-STUDIO.`;
+
+  if(navigator.share){
+
+    try{
+
+      await navigator.share({
+        title:"Mi resultado PRUEBA GAY™",
+        text:text
+      });
+
+      return;
+
+    }catch(error){
+
+      if(error.name==="AbortError"){
+        return;
+      }
+    }
+  }
+
+  try{
+
+    await navigator.clipboard.writeText(text);
+
+    alert("✅ Resultado copiado al portapapeles.");
+
+  }catch(error){
+
+    prompt("Copiá tu resultado:",text);
+
+  }
+}
+
+/* ================================
+   REINICIAR
+================================ */
+
+function restart(){
+
+  selectedQuestions=[];
+  current=0;
+  total=0;
+  selectedGender="";
+
+  document.getElementById("progressFill").style.width="0%";
+
+  show("home");
+}
+
+/* ================================
+   PARTÍCULAS
+================================ */
+
+const particles=document.getElementById("particles");
+
+for(let i=0;i<40;i++){
+
+  const p=document.createElement("div");
+
+  p.className="particle";
+
+  p.style.left=Math.random()*100+"%";
+  p.style.top=(60+Math.random()*40)+"%";
+  p.style.animationDelay=Math.random()*5+"s";
+  p.style.animationDuration=(4+Math.random()*5)+"s";
+
+  particles.appendChild(p);
+}
+
+/* ================================
+   BOOT
+================================ */
+
+setTimeout(()=>{
+
+  show("home");
+
+},3900);
+
+</script>
+
+</body>
+</html>
