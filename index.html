@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta name="theme-color" content="#03040a">
-<title>PRUEBA GAY™ v10.0 — NOVA</title>
+<title>PRUEBA GAY™ v10.1 — NOVA TURBO</title>
 
 <style>
 *{
@@ -982,6 +982,34 @@ body{
  }
 }
 
+
+/* ===== NOVA TURBO v10.1 ===== */
+.questionBox {
+  transition: opacity .2s ease, transform .2s ease;
+}
+.questionBox.questionChanging {
+  opacity: 0;
+  transform: translateY(8px);
+}
+.revealResultButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 22px;
+  padding: 13px 20px;
+  border: 1px solid #48f5ff;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #073d55, #30205d);
+  color: #fff;
+  font-weight: 800;
+  letter-spacing: 1px;
+  cursor: pointer;
+  box-shadow: 0 0 18px #13dfff35;
+}
+.revealResultButton:active {
+  transform: scale(.97);
+}
+
 </style>
 </head>
 
@@ -1010,7 +1038,7 @@ body{
  </div>
 
  <div class="introVersion">
-  PRUEBA GAY™ · v10.0
+  PRUEBA GAY™ · v10.1
  </div>
 
  <div class="introLine"></div>
@@ -1034,7 +1062,7 @@ body{
   </div>
 
   <div class="homeSub">
-   NOVA · v10.0
+   NOVA TURBO · v10.1
   </div>
 
   <div class="homeText">
@@ -1166,6 +1194,10 @@ body{
   <div id="loadingText" class="analysisText">
    Inicializando sistema NOVA...
   </div>
+  <button id="revealResultButton" class="revealResultButton"
+          onclick="revealResult()">
+    ⚡ MOSTRAR RESULTADO AHORA
+  </button>
 
  </div>
 
@@ -1443,7 +1475,11 @@ function chooseAnswer(index,button){
 
  button.classList.add("selected");
 
- total+=index;
+ // Conservar el cálculo de puntuación original.
+ total += index;
+
+ const box=document.querySelector(".questionBox");
+ if(box) box.classList.add("questionChanging");
 
  setTimeout(()=>{
 
@@ -1451,7 +1487,10 @@ function chooseAnswer(index,button){
 
   if(current<selectedQuestions.length){
 
-   showQuestionLoading();
+   renderQuestion();
+
+   const updatedBox=document.querySelector(".questionBox");
+   if(updatedBox) updatedBox.classList.remove("questionChanging");
 
   }else{
 
@@ -1459,9 +1498,8 @@ function chooseAnswer(index,button){
 
   }
 
- },400);
+ },200);
 }
-
 
 
 /* ===== CARGA ENTRE PREGUNTAS ===== */
@@ -1508,43 +1546,59 @@ function showQuestionLoading(){
 
 /* ===== ANÁLISIS ===== */
 
+let analysisTimer = null;
+let analysisInterval = null;
+
 function finish(){
 
  document.getElementById("progressFill").style.width="100%";
-
  show("loadingScreen");
 
+ const text=document.getElementById("loadingText");
+ const button=document.getElementById("revealResultButton");
+
+ if(button) button.style.display="inline-flex";
+
  const messages=[
-  "Inicializando sistema NOVA...",
   "Procesando respuestas...",
-  "Analizando patrones...",
-  "Calculando resultado...",
-  "Finalizando NOVA..."
+  "Calculando puntuación...",
+  "Preparando resultado NOVA..."
  ];
 
  let i=0;
-
- const text=document.getElementById("loadingText");
-
  text.textContent=messages[0];
 
- const interval=setInterval(()=>{
+ if(analysisInterval) clearInterval(analysisInterval);
+ if(analysisTimer) clearTimeout(analysisTimer);
 
+ analysisInterval=setInterval(()=>{
   i++;
-
   if(i<messages.length){
    text.textContent=messages[i];
   }
+ },300);
 
- },500);
+ analysisTimer=setTimeout(()=>{
+  revealResult();
+ },1000);
+}
 
- setTimeout(()=>{
+function revealResult(){
 
-  clearInterval(interval);
+ if(analysisInterval){
+  clearInterval(analysisInterval);
+  analysisInterval=null;
+ }
 
-  showResult();
+ if(analysisTimer){
+  clearTimeout(analysisTimer);
+  analysisTimer=null;
+ }
 
- },2800);
+ const button=document.getElementById("revealResultButton");
+ if(button) button.style.display="none";
+
+ showResult();
 }
 
 
@@ -1562,7 +1616,7 @@ function showResult(){
 
   data={
    icon:"🤖",
-   title:"SEÑALES MUY BAJAS",
+   title:"PUNTUACIÓN MUY BAJA",
    text:"Tus respuestas generaron una puntuación baja en este juego."
   };
 
@@ -1570,7 +1624,7 @@ function showResult(){
 
   data={
    icon:"😎",
-   title:"SEÑALES BAJAS",
+   title:"PUNTUACIÓN BAJA",
    text:"Tus respuestas generaron algunas señales en este juego."
   };
 
@@ -1578,7 +1632,7 @@ function showResult(){
 
   data={
    icon:"👀",
-   title:"SISTEMA INDECISO",
+   title:"PUNTUACIÓN INTERMEDIA",
    text:"Tus respuestas estuvieron bastante mezcladas."
   };
 
@@ -1586,7 +1640,7 @@ function showResult(){
 
   data={
    icon:"🌈",
-   title:"SEÑALES ALTAS",
+   title:"PUNTUACIÓN ALTA",
    text:"Tus respuestas generaron una puntuación alta en este juego."
   };
 
@@ -1594,7 +1648,7 @@ function showResult(){
 
   data={
    icon:"👑",
-   title:"SEÑALES MUY ALTAS",
+   title:"PUNTUACIÓN MUY ALTA",
    text:"Tus respuestas generaron una puntuación muy alta en este juego."
   };
 
@@ -1675,7 +1729,7 @@ async function shareResult(){
  document.getElementById("score").textContent;
 
  const text=
- `🌈 PRUEBA GAY™ v10.0
+ `🌈 PRUEBA GAY™ v10.1 — NOVA TURBO
 NOVA
 
 ${title}
